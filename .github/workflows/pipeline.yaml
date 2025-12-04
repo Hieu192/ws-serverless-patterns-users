@@ -220,9 +220,10 @@ jobs:
 
       - run: |
           # trigger the integration tests here
-          # pip install -r tests/requirements.txt
-          # export ENV_STACK_NAME=${{ env.TESTING_STACK_NAME }}
-          # python3 -m pytest tests/integration -v
+          pip3 install -r requirements.txt 
+          pip install -r tests/requirements.txt
+          export ENV_STACK_NAME=${{ env.TESTING_STACK_NAME }}
+          python3 -m pytest tests/integration -v
 
   deploy-prod:
     if: github.ref == 'refs/heads/main'
