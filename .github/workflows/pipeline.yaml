@@ -207,6 +207,15 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
 
+      - name: Assume the testing pipeline user role
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.TESTING_REGION }}
+          role-to-assume: ${{ env.TESTING_PIPELINE_EXECUTION_ROLE }}
+          role-session-name: integration-testing
+          role-duration-seconds: 3600
+          role-skip-session-tagging: true
+
       - run: |
           # trigger the integration tests here
           pip install -r tests/requirements.txt
