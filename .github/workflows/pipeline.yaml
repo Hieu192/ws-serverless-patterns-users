@@ -39,6 +39,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          python-version: '3.11'
+          cache: 'pip'
       - run: |
           # trigger the tests here
           python3 -m pytest tests/unit -v
@@ -197,8 +200,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
       - run: |
           # trigger the integration tests here
+          pip install -r tests/requirements.txt
           export ENV_STACK_NAME=${{ env.TESTING_STACK_NAME }}
           python3 -m pytest tests/integration -v
 
