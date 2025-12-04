@@ -22,10 +22,22 @@ def mock_uuid():
 
 @contextmanager
 def my_test_environment():
+    os.environ['AWS_DEFAULT_REGION'] = 'ap-southeast-1' 
+    os.environ['AWS_ACCESS_KEY_ID'] = 'testing'
+    os.environ['AWS_SECRET_ACCESS_KEY'] = 'testing'
+    os.environ['AWS_SECURITY_TOKEN'] = 'testing'
+    os.environ['AWS_SESSION_TOKEN'] = 'testing'
+
     with mock_dynamodb():
         set_up_dynamodb()
         put_data_dynamodb()
         yield
+
+    del os.environ['AWS_DEFAULT_REGION']
+    del os.environ['AWS_ACCESS_KEY_ID']
+    del os.environ['AWS_SECRET_ACCESS_KEY']
+    del os.environ['AWS_SECURITY_TOKEN']
+    del os.environ['AWS_SESSION_TOKEN']
 
 def set_up_dynamodb():
     conn = boto3.client(
