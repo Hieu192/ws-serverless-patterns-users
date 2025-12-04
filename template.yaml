@@ -37,6 +37,10 @@ Resources:
     Properties:
       Handler: src/api/users.lambda_handler
       Description: Handler for all users related operations
+      AutoPublishAlias: live
+      DeploymentPreference:
+        Enabled: true
+        Type: AllAtOnce 
       Environment:
         Variables:
           USERS_TABLE: !Ref UsersTable
@@ -46,6 +50,12 @@ Resources:
       Tags:
         Stack: !Sub "${AWS::StackName}"
       Events:
+        GetusersCountEvent:
+          Type: Api
+          Properties:
+            Path: /users/count
+            Method: get
+            RestApiId: !Ref RestAPI
         GetUsersEvent:
           Type: Api
           Properties:

@@ -1,6 +1,3 @@
-# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-# SPDX-License-Identifier: MIT-0
-
 import os
 import re
 import json
@@ -88,6 +85,7 @@ def lambda_handler(event, context):
 
     # Add user specific resources/methods
     policy.allow_method(HttpVerb.GET, f"/users/{principal_id}")
+    policy.allow_method(HttpVerb.GET, f"/users/count/{principal_id}")
     policy.allow_method(HttpVerb.PUT, f"/users/{principal_id}")
     policy.allow_method(HttpVerb.DELETE, f"/users/{principal_id}")
     policy.allow_method(HttpVerb.GET, f"/users/{principal_id}/*")
@@ -98,11 +96,12 @@ def lambda_handler(event, context):
     # Assumption: admin group always has higher precedence
     if 'cognito:groups' in validated_decoded_token and validated_decoded_token['cognito:groups'][0] == admin_group_name:
         # add administrative privileges
+        policy.allow_method(HttpVerb.GET, "users/count")
         policy.allow_method(HttpVerb.GET, "users")
         policy.allow_method(HttpVerb.GET, "users/*")
         policy.allow_method(HttpVerb.DELETE, "users")
         policy.allow_method(HttpVerb.DELETE, "users/*")
-        policy.allow_method(HttpVerb.POST, "users")
+        policy.allow_method(HttpVerb.PUT, "users")
         policy.allow_method(HttpVerb.PUT, "users/*")
 
     # Finally, build the policy
