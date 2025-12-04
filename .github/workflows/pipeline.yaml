@@ -44,6 +44,7 @@ jobs:
           cache: 'pip'
       - run: |
           # trigger the tests here
+          pip install -r tests/requirements.txt
           python3 -m pytest tests/unit -v
 
   delete-feature:
