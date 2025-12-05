@@ -36,7 +36,7 @@ def test_allow_post_user_by_administrative_user(global_config):
     response = requests.post(
         global_config["APIEndpoint"] + '/users',
         data=json.dumps(new_user),
-        headers={'Authorization': global_config["adminUserIdToken"],
+        headers={'Authorization': global_config["adminUserAccessToken"],
                  'Content-Type': 'application/json'}
     )
     assert response.status_code == 201
@@ -50,7 +50,7 @@ def test_deny_post_invalid_user(global_config):
     response = requests.post(
         global_config["APIEndpoint"] + '/users',
         data=new_invalid_user,
-        headers={'Authorization': global_config["adminUserIdToken"],
+        headers={'Authorization': global_config["adminUserAccessToken"],
                  'Content-Type': 'application/json'}
     )
     assert response.status_code == 400
@@ -118,7 +118,7 @@ def test_admin_can_list_all_users(global_config):
     """Verify that an administrative user can list all users"""
     response = requests.get(
         global_config["APIEndpoint"] + '/users',
-        headers={'Authorization': global_config["adminUserIdToken"]}
+        headers={'Authorization': global_config["adminUserAccessToken"]}
     )
     assert response.status_code == 200
     data = json.loads(response.text)
@@ -131,7 +131,7 @@ def test_admin_can_delete_existing_user(global_config):
     # Sử dụng new_user_id từ test trước (user được tạo bởi admin)
     response = requests.delete(
         global_config["APIEndpoint"] + f'/users/{new_user_id}',
-        headers={'Authorization': global_config["adminUserIdToken"]}
+        headers={'Authorization': global_config["adminUserAccessToken"]}
     )
     assert response.status_code == 200
     data = json.loads(response.text)
