@@ -40,6 +40,8 @@ Resources:
       AutoPublishAlias: live
       DeploymentPreference:
         Enabled: true
+        Alarms:
+          - !Ref UsersFunctionErrorsAlarm
         Type: Canary10Percent5Minutes 
       Environment:
         Variables:

@@ -28,8 +28,9 @@ def lambda_handler(event, context):
         'Access-Control-Allow-Origin': '*'
         }
 
-    try:
+    # try:
         if route_key == 'GET /users/count':
+            my_invalid_function()
             ddb_response = ddbTable.scan(Select='COUNT')
             # return list of items instead of full DynamoDB response
             response_body = {'CountTestVip': ddb_response['Count']}
@@ -103,16 +104,16 @@ def lambda_handler(event, context):
                 ddbTable.put_item(Item=request_json)
                 response_body = request_json
                 status_code = 200
-    except json.JSONDecodeError:
-        status_code = 400
-        response_body = {'Error': 'Invalid JSON in request body'}
-    except KeyError as err:
-        status_code = 400
-        response_body = {'Error': f'Missing required field: {str(err)}'}
-    except Exception as err:
-        status_code = 500
-        response_body = {'Error': 'Internal server error'}
-        print(f'Error: {str(err)}')
+    # except json.JSONDecodeError:
+    #     status_code = 400
+    #     response_body = {'Error': 'Invalid JSON in request body'}
+    # except KeyError as err:
+    #     status_code = 400
+    #     response_body = {'Error': f'Missing required field: {str(err)}'}
+    # except Exception as err:
+    #     status_code = 500
+    #     response_body = {'Error': 'Internal server error'}
+    #     print(f'Error: {str(err)}')
     return {
         'statusCode': status_code,
         'body': json.dumps(response_body),
