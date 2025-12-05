@@ -27,6 +27,12 @@ def lambda_handler(event, context):
         }
 
     try:
+        if route_key == 'GET /users/count':
+            ddb_response = ddbTable.scan(Select='COUNT')
+            # return list of items instead of full DynamoDB response
+            response_body = ddb_response['Count']
+            status_code = 200
+            
         # Get a list of all Users with pagination
         if route_key == 'GET /users':
             scan_kwargs = {'Select': 'ALL_ATTRIBUTES', 'Limit': 100}
