@@ -102,6 +102,7 @@ def lambda_handler(event, context):
         policy.allow_method(HttpVerb.DELETE, "users")
         policy.allow_method(HttpVerb.DELETE, "users/*")
         policy.allow_method(HttpVerb.PUT, "users")
+        policy.allow_method(HttpVerb.POST, "users")
         policy.allow_method(HttpVerb.PUT, "users/*")
 
     # Finally, build the policy

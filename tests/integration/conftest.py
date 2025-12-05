@@ -6,7 +6,7 @@ import os
 import pytest
 import time
 
-APPLICATION_STACK_NAME = os.getenv('ENV_STACK_NAME', None)
+APPLICATION_STACK_NAME = os.getenv('ENV_STACK_NAME', 'ws-serverless-patterns-users-dev')
 globalConfig = {}
 
 
@@ -77,6 +77,7 @@ def create_cognito_accounts():
     idp_client.admin_add_user_to_group(UserPoolId=globalConfig["UserPool"],
                                        Username=result["adminUserName"],
                                        GroupName=globalConfig["UserPoolAdminGroupName"])
+                                       
     # get new admin user authentication info
     idp_response = idp_client.initiate_auth(
         AuthFlow='USER_PASSWORD_AUTH',
