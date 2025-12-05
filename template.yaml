@@ -41,7 +41,6 @@ Resources:
       DeploymentPreference:
         Enabled: true
         Type: Canary10Percent5Minutes 
-        Type: AllAtOnce 
       Environment:
         Variables:
           USERS_TABLE: !Ref UsersTable
