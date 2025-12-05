@@ -7,6 +7,8 @@ import os
 import boto3
 from datetime import datetime, timezone
 
+# test aaaaassssssss 2
+
 # Prepare DynamoDB client
 USERS_TABLE = os.getenv('USERS_TABLE')
 if not USERS_TABLE:
@@ -32,7 +34,7 @@ def lambda_handler(event, context):
             # return list of items instead of full DynamoDB response
             response_body = ddb_response['Count']
             status_code = 200
-            
+
         # Get a list of all Users with pagination
         if route_key == 'GET /users':
             scan_kwargs = {'Select': 'ALL_ATTRIBUTES', 'Limit': 100}
